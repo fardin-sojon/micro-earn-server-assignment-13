@@ -454,8 +454,8 @@ app.post('/create-checkout-session', verifyToken, async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: `http://localhost:5173/dashboard/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `http://localhost:5173/dashboard/purchase-coin`,
+            success_url: `${process.env.CLIENT_URL}/dashboard/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${process.env.CLIENT_URL}/dashboard/purchase-coin`,
             metadata: {
                 email: req.decoded.email,
                 coins: coins,
