@@ -432,6 +432,27 @@ app.patch('/users/role/:id', verifyToken, async (req, res) => {
     res.send(result);
 });
 
+// Update User Profile (Name, Image)
+app.patch('/users/:email', verifyToken, async (req, res) => {
+    const email = req.params.email;
+    const { name, image } = req.body;
+    const query = { email: email };
+
+    // Verify user
+    if (email !== req.decoded.email) {
+        return res.status(403).send({ message: 'forbidden access' });
+    }
+
+    const updateDoc = {
+        $set: {
+            name: name,
+            image: image
+        }
+    }
+    const result = await User.updateOne(query, updateDoc);
+    res.send(result);
+});
+
 // Create Checkout Session
 app.post('/create-checkout-session', verifyToken, async (req, res) => {
     try {
